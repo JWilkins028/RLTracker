@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RL Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/2a85839126.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-dark">
+
+    <!-- Main display -->
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center text-primary fw-bold mt-3">ROCKET LEAGUE TRACKER</h1>
+            <hr class="text-white mb-2">
+        </div>
+        <div class="row px-2">
+            <div class="col-8">
+                <!-- Profile nav -->
+                <ul class="nav nav-underline" id="profileNav" role="tablist">
+                    <template id="profileNavItemTemplate">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-info fs-5 py-1" id="template-tab" data-bs-toggle="tab" data-bs-target="#template-tab-pane" type="button" role="tab">Username</button>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+            <div class="col-4 d-flex justify-content-end gap-1">
+                <!-- Search button -->
+                <button id="search" class="btn btn-outline-secondary d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;" data-bs-toggle="modal" data-bs-target="#searchModal">
+                    <i class="fa-solid fa-magnifying-glass text-light"></i>
+                </button>
+                <!-- Refresh button -->
+                <a id="refresh" class="btn btn-outline-secondary d-flex align-items-center justify-content-center" href="shortcuts://run-shortcut?name=RL%20Tracker" style="width: 42px; height: 42px;">
+                    <i class="fa-solid fa-rotate-right text-light"></i>
+                </a>
+            </div>
+            <div class="col-12">
+                <hr class="text-light mt-2 mb-0">
+            </div>
+            <div class="col-12">
+                <ul class="nav nav-underline mb-2" id="profileViewNav" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="playlistsTab nav-link text-light fs-5 py-1 active" data-bs-toggle="tab" type="button" role="tab" onclick="showView('playlistsView')">Playlists</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="lifetimeTab nav-link text-light fs-5 py-1" data-bs-toggle="tab" type="button" role="tab" onclick="showView('lifetimeView')">Lifetime</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="historyTab nav-link text-secondary fs-5 py-1" data-bs-toggle="tab" type="button" role="tab" onclick="showView('historyView')" disabled>Match History</button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Profile tab panes -->
+            <div class="tab-content" id="profileTabContent">
+                <template id="profileTabPaneTemplate">
+                    <div class="tab-pane" id="template-tab-pane" role="tabpanel" tabindex="0">
+
+                        <!-- Last updated -->
+                        <i class="text-white-50">Last Updated: </i><i class="lastUpdated text-white-50">00/00/00, 00:00 AM</i>
+
+                        <div class="viewNavContent tab-content">
+                            <div class="playlistsView tab-pane show active" role="tabpanel" tabindex="0">
+                                <!-- Playlist stats -->
+                                <ul class="list-group col-12 mt-2 p-0">
+
+                                    <!-- Ranked 3v3 -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Ranked 3v3
+                                            </div>
+                                            <div class="col-3 p-0">
+                                                <img class="ThreesCurrRatingIcon img-fluid col-4 ms-3"
+                                                    src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png">
+                                                <span class="ThreesCurrTierDiv fs-6 text-warning align-middle me-1">0-0</span>
+                                            </div>
+                                            <div class="col-3 text-end p-0">
+                                                <span class="ThreesCurrMMR badge bg-secondary">
+                                                    0000
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Ranked 2v2 -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Ranked 2v2
+                                            </div>
+                                            <div class="col-3 p-0">
+                                                <img class="TwosCurrRatingIcon img-fluid col-4 ms-3"
+                                                    src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png">
+                                                <span class="TwosCurrTierDiv fs-6 text-warning align-middle me-1">0-0</span>
+                                            </div>
+                                            <div class="col-3 text-end p-0">
+                                                <span class="TwosCurrMMR badge bg-secondary">
+                                                    0000
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Ranked 1v1 -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Ranked 1v1
+                                            </div>
+                                            <div class="col-3 p-0">
+                                                <img class="OnesCurrRatingIcon img-fluid col-4 ms-3"
+                                                    src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png">
+                                                <span class="OnesCurrTierDiv fs-6 text-warning align-middle me-1">0-0</span>
+                                            </div>
+                                            <div class="col-3 text-end p-0">
+                                                <span class="OnesCurrMMR badge bg-secondary">
+                                                    0000
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Rumble -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Rumble
+                                            </div>
+                                            <div class="col-3 p-0">
+                                                <img class="RumbleCurrRatingIcon img-fluid col-4 ms-3"
+                                                    src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png">
+                                                <span class="RumbleCurrTierDiv fs-6 text-warning align-middle me-1">0-0</span>
+                                            </div>
+                                            <div class="col-3 text-end p-0">
+                                                <span class="RumbleCurrMMR badge bg-secondary">
+                                                    0000
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Hoops -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Hoops
+                                            </div>
+                                            <div class="col-3 p-0">
+                                                <img class="HoopsCurrRatingIcon img-fluid col-4 ms-3"
+                                                    src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png">
+                                                <span class="HoopsCurrTierDiv fs-6 text-warning align-middle me-1">0-0</span>
+                                            </div>
+                                            <div class="col-3 text-end p-0">
+                                                <span class="HoopsCurrMMR badge bg-secondary">
+                                                    0000
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Dropshot -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Dropshot
+                                            </div>
+                                            <div class="col-3 p-0">
+                                                <img class="DropshotCurrRatingIcon img-fluid col-4 ms-3"
+                                                    src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png">
+                                                <span class="DropshotCurrTierDiv fs-6 text-warning align-middle me-1">0-0</span>
+                                            </div>
+                                            <div class="col-3 text-end p-0">
+                                                <span class="DropshotCurrMMR badge bg-secondary">
+                                                    0000
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Snowday -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Snowday
+                                            </div>
+                                            <div class="col-3 p-0">
+                                                <img class="SnowdayCurrRatingIcon img-fluid col-4 ms-3"
+                                                    src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png">
+                                                <span class="SnowdayCurrTierDiv fs-6 text-warning align-middle me-1">0-0</span>
+                                            </div>
+                                            <div class="col-3 text-end p-0">
+                                                <span class="SnowdayCurrMMR badge bg-secondary">
+                                                    0000
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Casual -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Casual
+                                            </div>
+                                            <div class="col-6 text-end p-0">
+                                                <span class="CasualCurrMMR badge bg-secondary">
+                                                    0000
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="lifetimeView tab-pane" role="tabpanel" tabindex="0">
+                                <!-- Lifetime stats -->
+                                <ul class="list-group col-12 mt-2 p-0">
+
+                                    <!-- Season Reward Level -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Season Reward Level
+                                            </div>
+                                            <div class="col-6 text-end p-0">
+                                                <img class="SRL col-2 img-fluid" src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png">
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Wins -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Wins
+                                            </div>
+                                            <div class="col-6 text-end p-0">
+                                                <span class="Wins badge bg-secondary">
+                                                    ----
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- MVPs -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                MVPs
+                                            </div>
+                                            <div class="col-6 text-end p-0">
+                                                <span class="MVPs badge bg-secondary">
+                                                    ----
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Goals -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Goals
+                                            </div>
+                                            <div class="col-6 text-end p-0">
+                                                <span class="Goals badge bg-secondary">
+                                                    ----
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Shots -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Shots
+                                            </div>
+                                            <div class="col-6 text-end p-0">
+                                                <span class="Shots badge bg-secondary">
+                                                    ----
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Goal Shot Ratio -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Goal Shot Ratio
+                                            </div>
+                                            <div class="col-6 text-end p-0">
+                                                <span class="GSR badge bg-secondary">
+                                                    ----
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Assists -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Assists
+                                            </div>
+                                            <div class="col-6 text-end p-0">
+                                                <span class="Assists badge bg-secondary">
+                                                    ----
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Saves -->
+                                    <li class="list-group-item bg-dark border-secondary fw-bold text-nowrap">
+                                        <div class="row px-2">
+                                            <div class="col-6 text-light p-0">
+                                                Saves
+                                            </div>
+                                            <div class="col-6 text-end p-0">
+                                                <span class="Saves badge bg-secondary">
+                                                    ----
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="historyView tab-pane" role="tabpanel" tabindex="0"></div>
+                        </div>
+
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search modal -->
+    <div id="searchModal" class="modal mt-5" tabindex="-1">
+        <div class="modal-dialog mt-3">
+            <div class="modal-content bg-dark">
+                <div class="modal-body">
+                    <form id="searchForm">
+                        <div class="input-group">
+                            <div class="form-floating">
+                                <input type="text" id="searchInput" name="text" class="form-control text-light bg-dark border-secondary border-end-0" role="search" placeholder="Username" autocomplete="off" required>
+                                <label class="text-info" for="search">Username</label>
+                            </div>
+
+                            <button type="reset" class="btn btn-outline-secondary border-start-0 border-end-0" onclick="document.getElementById('searchInput').focus();">
+                                <i class="fa-solid fa-x text-info"></i>
+                            </button>
+                            <button type="submit" class="btn btn-outline-secondary border-start-0">
+                                <i class="fa-solid fa-magnifying-glass text-info"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
