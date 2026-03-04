@@ -13,8 +13,6 @@ const lifetimeDataMap = {
     "Saves": "saves"
 };
 
-const switchTab = false;
-
 const showView = (tab) => {
     document.querySelectorAll(".viewNavContent .tab-pane.active").forEach(tabPane => tabPane.classList.remove("show", "active"));
     document.querySelectorAll(`.viewNavContent .${tab}`).forEach(tabPane => tabPane.classList.add("show", "active"));
@@ -34,6 +32,12 @@ const toggleTheme = () => {
 // On page load
 window.onload = () => {
     const urlParams = new URLSearchParams(window.location.search);
+
+    let switchTab = false;
+    if (urlParams.has("s")) {
+        switchTab = true;
+        urlParams.delete("s");
+    }
 
     // Load player data
     for (const [player, data] of urlParams) {
@@ -59,7 +63,7 @@ window.onload = () => {
     });
 }
 
-const loadPlayerData = (player, playerData) => {;
+const loadPlayerData = (player, playerData) => {
     profileNav.appendChild(createNavItem(player, playerData.username));
     profileTabContent.appendChild(createProfileTabPane(player, playerData.lastUpdated, playerData.playlists, playerData.lifetime));
 }
