@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 
 <head>
@@ -19,7 +19,7 @@
                 <h1 class="text-center text-primary fw-bold mt-3">RL TRACKER</h1>
                 <!-- Menu dropdown-->
                 <div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
-                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Expand dropdown">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <ul class="dropdown-menu">
@@ -32,7 +32,7 @@
                         </li>
                         <li>
                             <!-- Search button -->
-                            <button id="search" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#searchModal">
+                            <button id="search" type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#searchModal">
                                 <i class="fa-solid fa-magnifying-glass me-1"></i>
                                 Search
                             </button>
@@ -66,6 +66,9 @@
                         <button class="playlistsTab nav-link text-light fs-5 py-0 active" data-bs-toggle="tab" type="button" role="tab" onclick="showView('playlistsView')">Playlists</button>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <button class="peaksTab nav-link text-light fs-5 py-0" data-bs-toggle="tab" type="button" role="tab" onclick="showView('peaksView')">Peaks</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <button class="lifetimeTab nav-link text-light fs-5 py-0" data-bs-toggle="tab" type="button" role="tab" onclick="showView('lifetimeView')">Lifetime</button>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -91,10 +94,10 @@
                                 <label class="text-info" for="search">Username</label>
                             </div>
 
-                            <button type="reset" class="btn btn-outline-secondary border-start-0 border-end-0" onclick="document.getElementById('searchInput').focus();">
+                            <button type="reset" class="btn btn-outline-secondary border-start-0 border-end-0" aria-label="Clear input" onclick="document.getElementById('searchInput').focus();">
                                 <i class="fa-solid fa-x text-info"></i>
                             </button>
-                            <button type="submit" class="btn btn-outline-secondary border-start-0">
+                            <button type="submit" class="btn btn-outline-secondary border-start-0" aria-label="Search for username">
                                 <i class="fa-solid fa-magnifying-glass text-info"></i>
                             </button>
                         </div>
@@ -107,8 +110,7 @@
     <!-- Profile nav item template -->
     <template id="profileNavItemTemplate">
         <li class="nav-item" role="presentation">
-            <button class="nav-link text-info fs-5 py-0" id="template-tab" data-bs-toggle="tab"
-                data-bs-target="#template-tab-pane" type="button" role="tab">Username</button>
+            <button class="nav-link text-info fs-5 py-0" id="template-tab" data-bs-toggle="tab" data-bs-target="#template-tab-pane" type="button" role="tab">Username</button>
         </li>
     </template>
 
@@ -117,13 +119,16 @@
         <div class="tab-pane" id="template-tab-pane" role="tabpanel" tabindex="0">
 
             <!-- Last updated -->
-            <i class="text-secondary-emphasis">Last Updated: </i><i class="lastUpdated text-secondary-emphasis">00/00/00,
-                00:00 AM</i>
+            <i class="text-secondary-emphasis">Last Updated: </i><i class="lastUpdated text-secondary-emphasis">00/00/00, 00:00 AM</i>
 
             <div class="viewNavContent tab-content">
                 <div class="playlistsView tab-pane show active" role="tabpanel" tabindex="0">
                     <!-- Playlist stats -->
                     <ul id="playlistStats" class="list-group col-12 mt-2 p-0"></ul>
+                </div>
+                <div class="peaksView tab-pane" role="tabpanel" tabindex="0">
+                    <!-- Peaks stats -->
+                    <ul id="peakStats" class="list-group col-12 mt-2 p-0"></ul>
                 </div>
                 <div class="lifetimeView tab-pane" role="tabpanel" tabindex="0">
                     <!-- Lifetime stats -->
@@ -143,8 +148,7 @@
                     Playlist Name
                 </div>
                 <div class="col-3 p-0">
-                    <img class="ratingIcon img-fluid col-4 ms-3"
-                        src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png">
+                    <img class="ratingIcon img-fluid col-4 ms-3" src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png" alt="Rating icon">
                     <span class="tierDiv text-warning align-middle me-1">0-0</span>
                 </div>
                 <div class="col-3 text-end p-0">
@@ -167,7 +171,7 @@
                     <span class="statValue badge bg-secondary">
                         ----
                     </span>
-                    <img class="statIcon col-2 img-fluid" src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png">
+                    <img class="statIcon col-2 img-fluid" src="https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/s4-0.png" alt="Stat icon">
                 </div>
             </div>
         </li>
