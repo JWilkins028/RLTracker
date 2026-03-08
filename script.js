@@ -82,6 +82,7 @@ const createNavItem = (player, username) => {
 const createProfileTabPane = (player, lastUpdated, allPlaylistData, lifetimeData) => {
     const newTabPane = document.importNode(profileTabPaneTemplate.content, true);
     const playlistStats = newTabPane.getElementById("playlistStats");
+    const peakStats = newTabPane.getElementById("peakStats");
     const lifetimeStats = newTabPane.getElementById("lifetimeStats");
     newTabPane.getElementById("template-tab-pane").id = `${player}-tab-pane`;
     newTabPane.querySelector('.lastUpdated').innerText = lastUpdated;
@@ -90,6 +91,7 @@ const createProfileTabPane = (player, lastUpdated, allPlaylistData, lifetimeData
     for (const playlistData of allPlaylistData) {
         if (playlistData.name !== "Casual") {
             playlistStats.append(createPlaylistStatGroup(playlistData));
+            peakStats.append(createPlaylistStatGroup(playlistData, true));
         } else {
             playlistStats.append(createLifetimeStatGroup(playlistData.name, playlistData.currentMMR));
         }
@@ -103,13 +105,15 @@ const createProfileTabPane = (player, lastUpdated, allPlaylistData, lifetimeData
     return newTabPane;
 }
 
-const createPlaylistStatGroup = (playlistData) => {
+const createPlaylistStatGroup = (playlistData, isPeak = false) => {
     const newPlaylistStatGroup = document.importNode(playlistStatGroupTemplate.content, true);
 
+    const statPrefix = isPeak ? "peak" : "current";
+
     newPlaylistStatGroup.querySelector(".playlistName").innerText = playlistData.name;
-    newPlaylistStatGroup.querySelector(".ratingIcon").src = "https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/" + playlistData.currentRankImg;
-    newPlaylistStatGroup.querySelector(".tierDiv").innerText = playlistData.currentRank + "-" + playlistData.currentDiv;
-    newPlaylistStatGroup.querySelector(".mmrValue").innerText = playlistData.currentMMR;
+    newPlaylistStatGroup.querySelector(".ratingIcon").src = "https://trackercdn.com/cdn/tracker.gg/rocket-league/ranks/" + playlistData[`${statPrefix}RankImg`];
+    newPlaylistStatGroup.querySelector(".tierDiv").innerText = playlistData[`${statPrefix}Rank`] + "-" + playlistData[`${statPrefix}Div`];
+    newPlaylistStatGroup.querySelector(".mmrValue").innerText = playlistData[`${statPrefix}MMR`];
 
     return newPlaylistStatGroup;
 }
